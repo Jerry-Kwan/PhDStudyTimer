@@ -56,6 +56,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self?.updateMenuBarTitle(timeString: timeString)
             }
             .store(in: &cancellables)
+        
+        // 添加对isSessionActive的监听
+        menuBarViewModel.$isSessionActive
+            .sink { [weak self] isActive in
+                if !isActive {
+                    self?.updateMenuBarTitle(timeString: "12H")
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func updateMenuBarIcon(state: TimerState) {
