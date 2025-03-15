@@ -50,13 +50,7 @@ PhD Study Timer 是一款为研究生和学者设计的 macOS 应用程序，旨
 - 非工作状态：显示睡觉图标和"12H"文本
 - 点击图标显示下拉菜单，提供主要功能入口
 
-#### 3.2 主操作界面
-- 简洁美观的界面设计，符合 macOS 设计规范
-- 显示当前会话状态和计时器
-- 提供开始/暂停/恢复/结束按钮
-- 显示今日工作时间统计
-
-#### 3.3 历史记录界面
+#### 3.2 历史记录界面
 - 美观的列表/表格视图显示历史会话
 - 提供筛选和排序选项
 - 详细视图显示单个会话的完整信息
@@ -122,9 +116,6 @@ PhDStudyTimer/
 │   ├── MenuBarView/
 │   │   ├── MenuBarView.swift        # Menu Bar 视图
 │   │   └── MenuBarViewModel.swift   # Menu Bar 视图模型
-│   ├── MainView/
-│   │   ├── MainView.swift           # 主界面视图
-│   │   └── MainViewModel.swift      # 主界面视图模型
 │   └── HistoryView/
 │       ├── HistoryView.swift        # 历史记录视图
 │       ├── HistoryViewModel.swift   # 历史记录视图模型
@@ -155,7 +146,6 @@ PhDStudyTimer/
 
 #### 2.3 视图层
 - **MenuBarView**: Menu Bar 图标和下拉菜单
-- **MainView**: 主操作界面，显示当前会话状态和控制按钮
 - **HistoryView**: 历史记录界面，显示过去的工作会话
 
 ## 开发计划 (Development Plan)

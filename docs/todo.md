@@ -59,8 +59,6 @@
 ### Menu Bar UI Enhancement
 - [x] Implement dynamic icon changes based on session state
 - [x] Add timer display in menu bar
-- [x] Create MainView.swift for the main app window
-- [x] Create MainViewModel.swift for main view logic
 - [x] Implement session control buttons (start, pause, resume, end)
 
 ## Phase 3: History and Statistics
