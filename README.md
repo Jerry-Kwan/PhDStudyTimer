@@ -1,5 +1,6 @@
 # PhD Study Timer
 
+https://macosicons.com/#/
 A macOS menu bar application designed to help PhD students and researchers track their work time efficiently.
 
 ## Features
