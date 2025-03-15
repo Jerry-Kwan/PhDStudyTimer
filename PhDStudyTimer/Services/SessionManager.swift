@@ -69,6 +69,9 @@ class SessionManager {
     
     func endSession() {
         timerService.stopTimer()
+        // Explicitly update the session state and active status
+        sessionState = .idle
+        isSessionActive = false
     }
     
     func formattedElapsedTime() -> String {

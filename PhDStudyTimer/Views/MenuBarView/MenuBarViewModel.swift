@@ -56,14 +56,6 @@ class MenuBarViewModel: ObservableObject {
         sessionManager.endSession()
     }
     
-    func getMenuBarTitle() -> String {
-        if isSessionActive {
-            return elapsedTimeString
-        } else {
-            return "12H"
-        }
-    }
-    
     func getMenuBarIcon() -> String {
         switch sessionState {
         case .running:

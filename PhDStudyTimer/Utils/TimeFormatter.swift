@@ -27,6 +27,13 @@ struct TimeFormatter {
         }
     }
     
+    static func formatTimeIntervalHoursMinutes(_ interval: TimeInterval) -> String {
+        let hours = Int(interval) / 3600
+        let minutes = (Int(interval) % 3600) / 60
+        
+        return String(format: "%02d:%02d", hours, minutes)
+    }
+    
     static func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium

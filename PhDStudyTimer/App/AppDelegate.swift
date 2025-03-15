@@ -88,7 +88,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let button = statusItem?.button else { return }
         
         if menuBarViewModel.isSessionActive {
-            button.title = " \(timeString)"
+            // Use hours:minutes format for menu bar
+            let timeHoursMinutes = TimeFormatter.formatTimeIntervalHoursMinutes(sessionManager.currentElapsedTime)
+            button.title = " \(timeHoursMinutes)"
         } else {
             button.title = " 12H"
         }
