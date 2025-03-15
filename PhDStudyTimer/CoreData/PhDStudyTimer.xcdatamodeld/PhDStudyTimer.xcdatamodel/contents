@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="PauseRecord" representedClassName="PauseRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="pauseTime" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="resumeTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="workSession" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="WorkSession" inverseName="pauseRecords" inverseEntity="WorkSession"/>
+    </entity>
+    <entity name="WorkSession" representedClassName="WorkSession" syncable="YES" codeGenerationType="class">
+        <attribute name="actualWorkDuration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="startTime" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="totalDuration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="pauseRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PauseRecord" inverseName="workSession" inverseEntity="PauseRecord"/>
+    </entity>
+</model> 
