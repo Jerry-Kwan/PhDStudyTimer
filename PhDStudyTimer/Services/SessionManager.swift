@@ -82,4 +82,13 @@ class SessionManager {
         // This will be implemented to update the menu bar icon based on session state
         // Will be called from AppDelegate
     }
+    
+    // MARK: - Manual Time Adjustment
+    
+    func manuallyUpdateElapsedTime(hours: Int, minutes: Int, seconds: Int) -> Bool {
+        // Only allow updates when paused
+        guard sessionState == .paused else { return false }
+        
+        return timerService.manuallyUpdateElapsedTime(hours: hours, minutes: minutes, seconds: seconds)
+    }
 } 

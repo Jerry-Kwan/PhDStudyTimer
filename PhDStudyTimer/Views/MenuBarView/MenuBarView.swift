@@ -20,18 +20,33 @@ struct MenuBarView: View {
             Divider()
             
             // Timer display
-            HStack {
-                Image(systemName: viewModel.getMenuBarIcon())
-                    .font(.system(size: 24))
-                
-                Text(viewModel.elapsedTimeString)
-                    .font(.system(size: 24, weight: .medium, design: .monospaced))
+            if viewModel.isEditingTime {
+                timeEditView
+            } else {
+                HStack {
+                    Image(systemName: viewModel.getMenuBarIcon())
+                        .font(.system(size: 24))
+                    
+                    Text(viewModel.elapsedTimeString)
+                        .font(.system(size: 24, weight: .medium, design: .monospaced))
+                }
+                .padding(.vertical, 8)
             }
-            .padding(.vertical, 8)
             
             // Control buttons
             HStack(spacing: 16) {
-                if viewModel.sessionState == .idle {
+                if viewModel.isEditingTime {
+                    // Save and Cancel buttons for time editing
+                    Button(action: viewModel.saveTimeEditing) {
+                        Label(Constants.Strings.save, systemImage: "checkmark")
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    Button(action: viewModel.cancelTimeEditing) {
+                        Label(Constants.Strings.cancel, systemImage: "xmark")
+                    }
+                    .buttonStyle(.bordered)
+                } else if viewModel.sessionState == .idle {
                     // Start button
                     Button(action: viewModel.startSession) {
                         Label(Constants.Strings.start, systemImage: "play.fill")
@@ -54,6 +69,12 @@ struct MenuBarView: View {
                     // Resume button
                     Button(action: viewModel.resumeSession) {
                         Label(Constants.Strings.resume, systemImage: "play.fill")
+                    }
+                    .buttonStyle(.bordered)
+                    
+                    // Edit time button
+                    Button(action: viewModel.startTimeEditing) {
+                        Label(Constants.Strings.editTime, systemImage: "pencil")
                     }
                     .buttonStyle(.bordered)
                     
@@ -101,5 +122,61 @@ struct MenuBarView: View {
         }
         .padding(.horizontal, 16)
         .frame(width: Constants.MenuBar.popoverWidth)
+    }
+    
+    // Time editing view
+    private var timeEditView: some View {
+        VStack(spacing: 8) {
+            Text("Edit Session Duration")
+                .font(.headline)
+            
+            HStack {
+                // Hours
+                VStack {
+                    Text("Hours")
+                        .font(.caption)
+                    
+                    Stepper(value: $viewModel.editedHours, in: 0...99) {
+                        Text("\(viewModel.editedHours)")
+                            .font(.system(.title2, design: .monospaced))
+                            .frame(width: 40)
+                    }
+                }
+                
+                Text(":")
+                    .font(.title2)
+                    .padding(.horizontal, -4)
+                
+                // Minutes
+                VStack {
+                    Text("Min")
+                        .font(.caption)
+                    
+                    Stepper(value: $viewModel.editedMinutes, in: 0...59) {
+                        Text("\(viewModel.editedMinutes, specifier: "%02d")")
+                            .font(.system(.title2, design: .monospaced))
+                            .frame(width: 40)
+                    }
+                }
+                
+                Text(":")
+                    .font(.title2)
+                    .padding(.horizontal, -4)
+                
+                // Seconds
+                VStack {
+                    Text("Sec")
+                        .font(.caption)
+                    
+                    Stepper(value: $viewModel.editedSeconds, in: 0...59) {
+                        Text("\(viewModel.editedSeconds, specifier: "%02d")")
+                            .font(.system(.title2, design: .monospaced))
+                            .frame(width: 40)
+                    }
+                }
+            }
+            .padding(.vertical, 4)
+        }
+        .padding(.vertical, 8)
     }
 } 

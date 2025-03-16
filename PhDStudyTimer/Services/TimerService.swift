@@ -25,8 +25,6 @@ class TimerService {
     
     private var timer: Timer?
     private var startTime: Date?
-    private var pauseStartTime: Date?
-    private var accumulatedTime: TimeInterval = 0
     private var currentWorkSession: WorkSession?
     private var currentPauseRecord: PauseRecord?
     
@@ -41,15 +39,12 @@ class TimerService {
         if timerState == .idle {
             // Start a new session
             startTime = Date()
-            accumulatedTime = 0
+            elapsedTime = 0
             
             // Create a new work session in CoreData
             currentWorkSession = CoreDataManager.shared.createWorkSession()
         } else if timerState == .paused {
             // Resume from pause
-            if let pauseStartTime = pauseStartTime {
-                accumulatedTime += Date().timeIntervalSince(pauseStartTime)
-            }
             
             // Resume the current pause record if exists
             if let pauseRecord = currentPauseRecord {
@@ -65,7 +60,6 @@ class TimerService {
     func pauseTimer() {
         guard timerState == .running else { return }
         
-        pauseStartTime = Date()
         timerState = .paused
         timer?.invalidate()
         
@@ -89,8 +83,6 @@ class TimerService {
         
         // Reset state
         startTime = nil
-        pauseStartTime = nil
-        accumulatedTime = 0
         elapsedTime = 0
         timerState = .idle
         currentPauseRecord = nil
@@ -106,9 +98,10 @@ class TimerService {
     }
     
     private func updateElapsedTime() {
-        guard let startTime = startTime, timerState == .running else { return }
+        guard timerState == .running else { return }
         
-        elapsedTime = Date().timeIntervalSince(startTime) - accumulatedTime
+        // Simply increment elapsed time by 1 second
+        elapsedTime += 1.0
     }
     
     // MARK: - Utility Methods
@@ -119,5 +112,19 @@ class TimerService {
         let seconds = Int(elapsedTime) % 60
         
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
+    // MARK: - Manual Time Adjustment
+    
+    func manuallyUpdateElapsedTime(hours: Int, minutes: Int, seconds: Int) -> Bool {
+        // Only allow manual updates when paused
+        guard timerState == .paused else { return false }
+        
+        // Calculate the new elapsed time in seconds
+        let newElapsedTime = TimeInterval(hours * 3600 + minutes * 60 + seconds)
+        
+        // Directly update the elapsed time
+        elapsedTime = newElapsedTime
+        return true
     }
 } 

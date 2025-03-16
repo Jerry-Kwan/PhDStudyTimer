@@ -47,5 +47,8 @@ struct Constants {
         static let history = "History"
         static let settings = "Settings"
         static let quit = "Quit"
+        static let editTime = "Edit"
+        static let save = "Save"
+        static let cancel = "Cancel"
     }
 } 

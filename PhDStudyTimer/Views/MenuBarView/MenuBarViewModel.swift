@@ -17,6 +17,12 @@ class MenuBarViewModel: ObservableObject {
     @Published var sessionState: TimerState = .idle
     @Published var elapsedTimeString = "00:00:00"
     
+    // Properties for manual time editing
+    @Published var isEditingTime = false
+    @Published var editedHours = 0
+    @Published var editedMinutes = 0
+    @Published var editedSeconds = 0
+    
     init() {
         setupBindings()
     }
@@ -64,6 +70,45 @@ class MenuBarViewModel: ObservableObject {
             return "pause.fill"
         case .idle:
             return "bed.double.fill"
+        }
+    }
+    
+    // MARK: - Time Editing Methods
+    
+    func startTimeEditing() {
+        guard sessionState == .paused else { return }
+        
+        // Parse current time string to set initial values
+        let components = elapsedTimeString.split(separator: ":")
+        if components.count == 3,
+           let hours = Int(components[0]),
+           let minutes = Int(components[1]),
+           let seconds = Int(components[2]) {
+            editedHours = hours
+            editedMinutes = minutes
+            editedSeconds = seconds
+        }
+        
+        isEditingTime = true
+    }
+    
+    func cancelTimeEditing() {
+        isEditingTime = false
+    }
+    
+    func saveTimeEditing() {
+        // Validate input values
+        let validMinutes = min(max(editedMinutes, 0), 59)
+        let validSeconds = min(max(editedSeconds, 0), 59)
+        
+        // Update the session time
+        if sessionManager.manuallyUpdateElapsedTime(
+            hours: editedHours,
+            minutes: validMinutes,
+            seconds: validSeconds
+        ) {
+            // Time was successfully updated
+            isEditingTime = false
         }
     }
 } 
