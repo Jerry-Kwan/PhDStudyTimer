@@ -2,6 +2,8 @@
 
 A macOS menu bar application designed to help PhD students and researchers track their work time efficiently.
 
+Only a toy project for fun.
+
 ## Features
 
 - **Menu Bar Integration**: Runs as a menu bar app for easy access without cluttering your desktop
@@ -12,3 +14,8 @@ A macOS menu bar application designed to help PhD students and researchers track
 ## Icon
 
 https://macosicons.com/#/
+
+## Screenshots
+
+<img src="./assets/timer.png" alt="timer" width="300"/>
+<img src="./assets/history.png" alt="history" width="300"/>
