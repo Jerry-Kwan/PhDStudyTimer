@@ -4,5 +4,11 @@
 <dict>
 	<key>LSUIElement</key>
 	<true/>
+	<key>NSUserNotificationAlertStyle</key>
+	<string>alert</string>
+	<key>UNUserNotificationStyle</key>
+	<string>alert</string>
+	<key>NSUserNotificationsSuppressionTime</key>
+	<integer>0</integer>
 </dict>
 </plist>

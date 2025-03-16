@@ -50,6 +50,10 @@ struct Constants {
         static let editTime = "Edit"
         static let save = "Save"
         static let cancel = "Cancel"
+        static let dismiss = "Dismiss"
+        
+        // Notifications
+        static let resumeTimerReminder = "Your timer is paused. Remember to resume your study session."
         
         // History View
         static let historyTitle = "Work Session History"

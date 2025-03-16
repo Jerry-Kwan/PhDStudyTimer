@@ -61,6 +61,9 @@ class SystemMonitor {
     
     @objc private func screenUnlocked() {
         onScreenUnlocked?()
+        
+        // Check if timer is paused and show notification
+        checkTimerStateAndNotify()
     }
     
     @objc private func systemWillSleep() {
@@ -71,6 +74,18 @@ class SystemMonitor {
     @objc private func systemDidWake() {
         // Don't automatically treat wake as unlock
         // The screen will still be locked after wake, and screenUnlocked will be called when user unlocks
+        
+        // However, on some systems, the wake notification might be received without a subsequent unlock
+        // So we also check timer state here
+        checkTimerStateAndNotify()
+    }
+    
+    private func checkTimerStateAndNotify() {
+        // Check if timer is in paused state
+        if SessionManager.shared.sessionState == .paused {
+            // Show notification to remind user to resume timer
+            NotificationManager.shared.showResumeTimerNotification()
+        }
     }
     
     deinit {
