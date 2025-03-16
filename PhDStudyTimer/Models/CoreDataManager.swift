@@ -51,36 +51,10 @@ class CoreDataManager {
     func endWorkSession(_ workSession: WorkSession) {
         workSession.endTime = Date()
         
-        // Calculate total duration
-        if let startTime = workSession.startTime, let endTime = workSession.endTime {
-            let totalDuration = endTime.timeIntervalSince(startTime)
-            workSession.totalDuration = totalDuration
-            
-            // Calculate actual work duration (total - pauses)
-            let pauseDuration = calculatePauseDuration(for: workSession)
-            workSession.actualWorkDuration = totalDuration - pauseDuration
-        }
+        // Use elapsedTime from TimerService instead of calculating
+        workSession.totalDuration = TimerService.shared.elapsedTime
         
         saveContext()
-    }
-    
-    func calculatePauseDuration(for workSession: WorkSession) -> TimeInterval {
-        guard let pauseRecords = workSession.pauseRecords as? Set<PauseRecord> else {
-            return 0
-        }
-        
-        var totalPauseDuration: TimeInterval = 0
-        
-        for pauseRecord in pauseRecords {
-            if let pauseTime = pauseRecord.pauseTime, let resumeTime = pauseRecord.resumeTime {
-                totalPauseDuration += resumeTime.timeIntervalSince(pauseTime)
-            } else if let pauseTime = pauseRecord.pauseTime {
-                // If there's no resume time, calculate up to current time
-                totalPauseDuration += Date().timeIntervalSince(pauseTime)
-            }
-        }
-        
-        return totalPauseDuration
     }
     
     func fetchAllWorkSessions() -> [WorkSession] {
@@ -108,18 +82,20 @@ class CoreDataManager {
         }
     }
     
-    // MARK: - PauseRecord CRUD Operations
-    
-    func createPauseRecord(for workSession: WorkSession) -> PauseRecord {
-        let pauseRecord = PauseRecord(context: viewContext)
-        pauseRecord.pauseTime = Date()
-        pauseRecord.workSession = workSession
+    func deleteWorkSession(_ workSession: WorkSession) {
+        viewContext.delete(workSession)
         saveContext()
-        return pauseRecord
     }
     
-    func resumePauseRecord(_ pauseRecord: PauseRecord) {
-        pauseRecord.resumeTime = Date()
-        saveContext()
+    func deleteAllWorkSessions() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = WorkSession.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try viewContext.execute(deleteRequest)
+            saveContext()
+        } catch {
+            print("Error deleting all work sessions: \(error)")
+        }
     }
 } 

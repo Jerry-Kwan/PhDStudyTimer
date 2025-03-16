@@ -50,5 +50,29 @@ struct Constants {
         static let editTime = "Edit"
         static let save = "Save"
         static let cancel = "Cancel"
+        
+        // History View
+        static let historyTitle = "Work Session History"
+        static let filterByDate = "Filter by date"
+        static let from = "From:"
+        static let to = "To:"
+        static let apply = "Apply"
+        static let reset = "Reset"
+        static let noSessions = "No work sessions found"
+        static let deleteAll = "Delete All Sessions"
+        static let confirmDelete = "Confirm Deletion"
+        static let confirmDeleteAll = "Confirm Delete All"
+        static let deleteConfirmMessage = "Are you sure you want to delete this session?"
+        static let deleteAllConfirmMessage = "Are you sure you want to delete all sessions? This action cannot be undone."
+        static let delete = "Delete"
+        
+        // Session Detail View
+        static let sessionDetails = "Session Details"
+        static let startTime = "Start Time:"
+        static let endTime = "End Time:"
+        static let duration = "Duration:"
+        static let notCompleted = "Not completed"
+        static let spansMultipleDays = "Spans Multiple Days:"
+        static let yes = "Yes"
     }
 } 

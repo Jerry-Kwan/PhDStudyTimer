@@ -23,6 +23,9 @@ class MenuBarViewModel: ObservableObject {
     @Published var editedMinutes = 0
     @Published var editedSeconds = 0
     
+    // Property for showing history view
+    @Published var showHistoryView = false
+    
     init() {
         setupBindings()
     }

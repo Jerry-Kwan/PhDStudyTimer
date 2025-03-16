@@ -14,14 +14,8 @@
   - startTime (Date)
   - endTime (Date)
   - totalDuration (Double)
-  - actualWorkDuration (Double)
-  - relationship to PauseRecord entities
-- [x] Define PauseRecord entity with required attributes:
-  - pauseTime (Date)
-  - resumeTime (Date)
-  - relationship to parent WorkSession
 - [x] Create CoreDataManager.swift for database operations
-- [x] Implement CRUD operations for WorkSession and PauseRecord
+- [x] Implement CRUD operations for WorkSession
 
 ### Menu Bar Implementation
 - [x] Create AppDelegate.swift to handle application lifecycle
@@ -54,53 +48,33 @@
 - [x] Enhance SessionManager to handle pause/resume events
 - [x] Implement manual pause/resume in the UI
 - [x] Connect automatic pause on screen lock
-- [x] Store pause records in the database
 
 ### Menu Bar UI Enhancement
-- [x] Implement dynamic icon changes based on session state
 - [x] Add timer display in menu bar
 - [x] Implement session control buttons (start, pause, resume, end)
 
-## Phase 3: History and Statistics
+## Phase 3: History
 
-### History Record Functionality
-- [ ] Implement query methods in CoreDataManager for retrieving session history
-- [ ] Add filtering capabilities by date ranges
-- [ ] Create methods to calculate daily, weekly, and monthly statistics
+### History View Implementation
+- [x] Create HistoryView.swift for displaying work session history
+- [x] Create HistoryViewModel.swift to manage history data and logic
+- [x] Implement session list display with scrollable interface
+- [x] Add detailed information for each session (start time, end time, duration) on the list
 
-### History UI Implementation
-- [ ] Create HistoryView.swift for displaying work history
-- [ ] Create HistoryViewModel.swift for history view logic
-- [ ] Implement list/table view of past sessions
-- [ ] Create SessionDetailView.swift for detailed session information
-- [ ] Add date filtering controls
+### Date Filtering
+- [x] Add DatePicker components for start and end date selection
+- [x] Implement date range filtering functionality
+- [x] Create filter reset option
+- [x] Connect filtering to CoreData queries
 
-### Statistics and Visualization
-- [ ] Implement statistical calculations for work patterns
-- [ ] Add visualization components for work trends
-- [ ] Create daily and weekly summary views
-- [ ] Implement export functionality for session data
+### Session Management
+- [x] Add delete button for individual sessions
+- [x] Implement confirmation dialog for session deletion
+- [x] Add "Delete All" button for batch deletion
+- [x] Implement confirmation dialog for batch deletion
+- [x] Ensure UI updates after deletion operations
 
-## Final Phase: Polishing
-
-### UI/UX Refinement
-- [ ] Ensure consistent design across all views
-- [ ] Optimize UI for different screen sizes
-- [ ] Add animations and transitions
-- [ ] Implement keyboard shortcuts
-
-### Performance Optimization
-- [ ] Optimize CoreData queries
-- [ ] Reduce memory footprint
-- [ ] Ensure low CPU usage during idle periods
-
-### Testing
-- [ ] Write unit tests for core functionality
-- [ ] Perform integration testing
-- [ ] Conduct user testing
-- [ ] Fix identified bugs and issues
-
-### Documentation
-- [ ] Document code with comments
-- [ ] Create user documentation
-- [ ] Prepare app for distribution
+### Menu Bar Integration
+- [x] Add history view access button to menu bar dropdown
+- [x] Create smooth transition between menu and history view
+- [x] Implement proper window management for history view

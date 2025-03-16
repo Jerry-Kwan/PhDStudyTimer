@@ -26,7 +26,6 @@ class TimerService {
     private var timer: Timer?
     private var startTime: Date?
     private var currentWorkSession: WorkSession?
-    private var currentPauseRecord: PauseRecord?
     
     @Published var timerState: TimerState = .idle
     @Published var elapsedTime: TimeInterval = 0
@@ -45,12 +44,7 @@ class TimerService {
             currentWorkSession = CoreDataManager.shared.createWorkSession()
         } else if timerState == .paused {
             // Resume from pause
-            
-            // Resume the current pause record if exists
-            if let pauseRecord = currentPauseRecord {
-                CoreDataManager.shared.resumePauseRecord(pauseRecord)
-                currentPauseRecord = nil
-            }
+            // Simply change the state back to running
         }
         
         timerState = .running
@@ -62,11 +56,6 @@ class TimerService {
         
         timerState = .paused
         timer?.invalidate()
-        
-        // Create a pause record in CoreData
-        if let workSession = currentWorkSession {
-            currentPauseRecord = CoreDataManager.shared.createPauseRecord(for: workSession)
-        }
     }
     
     func stopTimer() {
@@ -85,7 +74,6 @@ class TimerService {
         startTime = nil
         elapsedTime = 0
         timerState = .idle
-        currentPauseRecord = nil
     }
     
     // MARK: - Private Methods

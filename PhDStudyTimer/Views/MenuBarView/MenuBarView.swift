@@ -94,6 +94,7 @@ struct MenuBarView: View {
             VStack(alignment: .leading, spacing: 8) {
                 Button(action: {
                     // Open history view
+                    viewModel.showHistoryView = true
                 }) {
                     Label(Constants.Strings.history, systemImage: "clock")
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -122,6 +123,9 @@ struct MenuBarView: View {
         }
         .padding(.horizontal, 16)
         .frame(width: Constants.MenuBar.popoverWidth)
+        .sheet(isPresented: $viewModel.showHistoryView) {
+            HistoryView()
+        }
     }
     
     // Time editing view
